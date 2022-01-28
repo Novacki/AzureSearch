@@ -19,16 +19,6 @@ Demo.CreateIndex(azureSearchSettings.IndexName, adminClient);
 
 SearchClient srchclient = new SearchClient(serviceEndpoint, azureSearchSettings.IndexName , credential);
 
-FieldBuilder fieldBuilder = new FieldBuilder();
-var searchFields = fieldBuilder.Build(typeof(Hotel));
-
-var definition = new SearchIndex(azureSearchSettings.IndexName, searchFields);
-
-var suggester = new SearchSuggester("sg", new[] { "HotelName", "Category", "Address/City", "Address/StateProvince" });
-definition.Suggesters.Add(suggester);
-
-adminClient.CreateOrUpdateIndex(definition);
-
 var adminRulesForUpdate = adminClient.GetSearchClient(azureSearchSettings.IndexName);
 
 Demo.UploadDocuments(adminRulesForUpdate);
